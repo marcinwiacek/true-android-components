@@ -65,6 +65,7 @@ class GeckoEngineSession(
 
     internal lateinit var geckoSession: GeckoSession
     internal var currentUrl: String? = null
+    internal var currentTitle: String? = null
     internal var scrollY: Int = 0
 
     // This is set once the first content paint has occurred and can be used to
@@ -629,6 +630,8 @@ class GeckoEngineSession(
         }
 
         override fun onTitleChange(session: GeckoSession, title: String?) {
+            if (title == currentTitle) return
+            currentTitle = title
             if (!privateMode) {
                 currentUrl?.let { url ->
                     settings.historyTrackingDelegate?.let { delegate ->
