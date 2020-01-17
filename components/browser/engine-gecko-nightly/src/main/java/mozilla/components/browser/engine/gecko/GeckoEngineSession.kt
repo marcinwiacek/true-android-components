@@ -43,6 +43,7 @@ import org.mozilla.geckoview.GeckoSession
 import org.mozilla.geckoview.GeckoSession.NavigationDelegate
 import org.mozilla.geckoview.GeckoSessionSettings
 import org.mozilla.geckoview.WebRequestError
+import org.mozilla.geckoview.SlowScriptResponse
 import kotlin.coroutines.CoroutineContext
 
 /**
@@ -571,6 +572,13 @@ class GeckoEngineSession(
             hitResult?.let {
                 notifyObservers { onLongPress(it) }
             }
+        }
+
+        override fun onSlowScript(geckoSession: GeckoSession,
+                                  scriptFileName:String):GeckoResult<SlowScriptResponse>
+        {
+            return GeckoResult.fromValue(SlowScriptResponse.CONTINUE)
+
         }
 
         override fun onCrash(session: GeckoSession) {

@@ -35,14 +35,8 @@ import mozilla.components.support.ktx.kotlin.isGeoLocation
 import mozilla.components.support.ktx.kotlin.isPhone
 import mozilla.components.support.ktx.kotlin.tryGetHostFromUrl
 import org.json.JSONObject
-import org.mozilla.geckoview.AllowOrDeny
-import org.mozilla.geckoview.ContentBlocking
-import org.mozilla.geckoview.GeckoResult
-import org.mozilla.geckoview.GeckoRuntime
-import org.mozilla.geckoview.GeckoSession
+import org.mozilla.geckoview.*
 import org.mozilla.geckoview.GeckoSession.NavigationDelegate
-import org.mozilla.geckoview.GeckoSessionSettings
-import org.mozilla.geckoview.WebRequestError
 import kotlin.coroutines.CoroutineContext
 
 /**
@@ -642,6 +636,14 @@ class GeckoEngineSession(
             }
             notifyObservers { onTitleChange(title ?: "") }
         }
+
+        override fun onSlowScript(geckoSession: GeckoSession,
+                                  scriptFileName:String):GeckoResult<SlowScriptResponse>
+        {
+            return GeckoResult.fromValue(SlowScriptResponse.CONTINUE)
+
+        }
+
 
         override fun onFocusRequest(session: GeckoSession) = Unit
 
