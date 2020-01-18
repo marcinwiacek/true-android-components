@@ -1,339 +1,129 @@
-# Android components
+This project was somehow started on Thu 16 Jan 2020, for full articles, docs, pictures, diagrams see [mwiacek.com](http://www.mwiacek.com)
 
-[![Task Status](https://github.taskcluster.net/v1/repository/mozilla-mobile/android-components/master/badge.svg)](https://github.taskcluster.net/v1/repository/mozilla-mobile/android-components/master/latest)
-[![codecov](https://codecov.io/gh/mozilla-mobile/android-components/branch/master/graph/badge.svg)](https://codecov.io/gh/mozilla-mobile/android-components)
-[![Bors enabled](https://bors.tech/images/badge_small.svg)](https://app.bors.tech/repositories/19637)
-[![Gitter](https://badges.gitter.im/mozilla-mobile/android-components.svg)](https://gitter.im/mozilla-mobile/android-components)
+**It's not related to Mozilla anymore, it's just changed fork, where all Mozilla related branding will be removed before first official release.**
 
-_A collection of Android libraries to build browsers or browser-like applications._
+Created THX to AMD, Ubuntu and hard work.
 
-ℹ️ For more information **[see the website](https://mozilla-mobile.github.io/android-components/)**.
+# Why it was started
 
-A full featured reference browser implementation based on the components can be found in the [reference-browser repository](https://github.com/mozilla-mobile/reference-browser).
+Currently the most popular browser on the market is Google Chrome.
 
-# Getting Involved
+I was sending various bug information there (see [list visible externally](https://bugs.chromium.org/p/chromium/issues/list?can=1&q=mwiacek&sort=-modified)), unfortunately some of them were not resolved over months or people had problems with understanding them.
 
-We encourage you to participate in this open source project. We love pull requests, bug reports, ideas, (security) code reviews or any kind of positive contribution.
+I have also seen, that some decisions were definitely not-user friendly, for example:
 
-Before you attempt to make a contribution please read the [Community Participation Guidelines](https://www.mozilla.org/en-US/about/governance/policies/participation/).
+* [Removing Jumbo support](https://groups.google.com/a/chromium.org/forum/#!topic/chromium-dev/DP9TQszzQLI) - this was done without checking effort on community and natural Earth environment + increased dramatically compilation time (for example from 1h to 4h), additionally tightened compilation with Google servers
 
-* [View current Issues](https://github.com/mozilla-mobile/android-components/issues) or [View current Pull Requests](https://github.com/mozilla-mobile/android-components/pulls).
+* [No implementation for keydown and keyup](https://bugs.chromium.org/p/chromium/issues/detail?id=118639) - it was mentioned by many people, but Google refused for providing it
 
-* [List of good first issues](https://github.com/mozilla-mobile/android-components/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22) (**New contributors start here!**) and [List of "help wanted" issues](https://github.com/mozilla-mobile/android-components/issues?q=is%3Aissue+is%3Aopen+label%3A%22help+wanted%22).
+* [Suspending small change in history window helping dramatically in finding site](https://bugs.chromium.org/p/chromium/issues/detail?id=962309) - I proposed it somehow in May 2019, but Google decided to put it for some future
 
-* Gitter: [chat room](https://gitter.im/mozilla-mobile/android-components).
+There are many smart SWE (SoftWare Engineers) in Google, but they're many times limited by schedule or doing more important tasks (from company point of view of course).
 
-* Subscribe to our mailing list [android-components@](https://lists.mozilla.org/listinfo/android-components) to keep up to date ([Archives](https://lists.mozilla.org/pipermail/android-components/)).
+During months I was observing, that people doing great work with me are leaving project, also there were very controversial changes with API for external ad blockers, filesystem API and in the Dec 2019 there was seen (another) quality issue - [Chrome was ignoring or even loosing some user data](https://bugs.chromium.org/p/chromium/issues/detail?id=1033655).
 
-* Localization happens on [Pontoon](https://pontoon.mozilla.org/projects/android-l10n/). Please get in touch with delphine (at) mozilla (dot) com directly for more information.
+It looks for me, that project is so big and popular now, that probably nobody see need of further investing in big team. This scenario looks a little bit like with Internet Explorer.
 
-# Maven repository
+Other companies (like Microsoft) are taking code and adding brand, also there are many forks from people, who don't have too big resources.
 
-All components are getting published on [maven.mozilla.org](https://maven.mozilla.org/).
-To use them, you need to add the following to your project's top-level build file, in the `allprojects` block (see e.g. the [reference-browser](https://github.com/mozilla-mobile/reference-browser/blob/master/build.gradle)):
+**This is catastrophic - various updates are not going back to main tree.**
 
-```groovy
-repositories {
-    maven {
-       url "https://maven.mozilla.org/maven2"
-    }
-}
-```
+This was bad for me and in January 2020 I started looking into the code of last Chrome alternative, which are Mozilla products. Fundation is known in last years from very controversial steps like changing CEO, dropping some API with Firefox 57, firing technical people and some other things, but I was very positive after seeing Firefox Preview for Android.
 
-Each module that uses a component needs to specify it in its build file, in the `dependencies` block.  For example, to use the `Base` component (in the `support`) collection, you need:
+Unfortunately I have realized, that some of my issues or suggestions from Oct or Nov 2019 were not touched for longer time.
 
-```groovy
-dependencies {
-    implementation 'org.mozilla.components:support-base:+'
-}
-```
+There was visible first red light in my head, when I saw information on GitHub, that team is small and can have resources problem.
 
-## Snapshot builds
+**If Mozilla want to attract people, it should never happen!** - mobile team should have resources + instead of few mobile projects there must be one and only one.
 
-Snapshots are build daily from the `master` branch and published on [snapshots.maven.mozilla.org](https://snapshots.maven.mozilla.org).
+I decided to prepare trivial pieces of code, but they were dropped with information, that team has got own schedule and they know better, what is required.
 
-# API Reference
+**There were even doubts with 2-lines long change!**
 
-The API reference docs are available at [mozac.org/api/](https://mozac.org/api/).
+I was very surprised with reactions + have seen, that even lack of JetStream 2 benchmark support (probably one of more popular) is not problem. I reported this last thing and about after three months it was pointed, that Preview doesn't have very small piece of code (it wasn't added later).
 
-# Components
+This was shock for me, because it looks, that there is big gap between manifest and reality (foundation works in really formal corporate way and technical works seems to be replaced by political correctness) + even example browsers from Mozilla have more advanced code in basic area than Preview.
 
-* 🔴 **In Development** - Not ready to be used in shipping products.
-* ⚪ **Preview** - This component is almost/partially ready and can be tested in products.
-* 🔵 **Production ready** - Used by shipping products.
+They have quite good codebase, but it looks for me currently, that Preview is done with changed design guidlines in "a little bit" random way OR this is infitine research project (like Servo).
 
-## Browser
+**You should never build house from top, if you want to have good results!**
 
-High-level components for building browser(-like) apps.
+In this case: if Preview is replacement for "old" mobile Firefox, it should first concentrate on basic functionalities like working with all sites, then add more basic stuff and then think about bells-and-whistles.
 
-* ⚪ [**Awesomebar**](components/browser/awesomebar/README.md) - A customizable [Awesome Bar](https://support.mozilla.org/en-US/kb/awesome-bar-search-firefox-bookmarks-history-tabs) implementation for browsers.
+# What it is for
 
-* 🔵 [**Domains**](components/browser/domains/README.md) Localized and customizable domain lists for auto-completion in browsers.
+This project is my big research project, where I want to see, if I can prepare better Firefox (faster, smarter, with better interface) than foundation people.
 
-* ⚪ [**Engine-Gecko**](components/browser/engine-gecko/README.md) - *Engine* implementation based on [GeckoView](https://wiki.mozilla.org/Mobile/GeckoView) (Release channel).
+My short term goals (as of 16 Jan 2020):
 
-* ⚪ [**Engine-Gecko-Beta**](components/browser/engine-gecko-beta/README.md) - *Engine* implementation based on [GeckoView](https://wiki.mozilla.org/Mobile/GeckoView) (Beta channel).
+1. preparing repository, where I will have code cleaned from old parts with all elements required for local building (for now this is fork of fenix + android-components, I plan more)
 
-* ⚪ [**Engine-Gecko-Nightly**](components/browser/engine-gecko-nightly/README.md) - *Engine* implementation based on [GeckoView](https://wiki.mozilla.org/Mobile/GeckoView) (Nightly channel).
+2. making GUI interface extremly logical - cleaning it from very annoying "hey, this is Firefox" reminders, replacing collections with normal bookmarks folders structure, etc. **Believe me, number of issues is so huge, that I was so surprised, that somebody went into this direction.**
 
-* ⚪ [**Engine-System**](components/browser/engine-system/README.md) - *Engine* implementation based on the system's WebView.
+3. adding missed basic functionalities - support for handling long-running scripts, refresh gesture, local backup/restore for bookmarks, etc.
 
-* 🔵 [**Errorpages**](components/browser/errorpages/README.md) - Responsive browser error pages for Android apps.
+4. cleaning from all components making it slower - telemetry, etc. (and checking how fast it is after all)
 
-* 🔴 [**Icons**](components/browser/icons/README.md) - A component for loading and storing website icons (like [Favicons](https://en.wikipedia.org/wiki/Favicon)).
+5. removing Mozilla branding and putting app into Google Play
 
-* ⚪ [**Menu**](components/browser/menu/README.md) - A generic menu with customizable items primarily for browser toolbars.
+6. making regular sync with most important Firefox Preview functionalities (like support for plugins)
 
-* 🔵 [**Search**](components/browser/search/README.md) - Search plugins and companion code to load, parse and use them.
+Long term goals (as of 16 Jan 2020):
 
-* 🔵 [**Session**](components/browser/session/README.md) - A generic representation of a browser session.
+1. getting more people able to help
 
-* 🔴 [**Storage-Memory**](components/browser/storage-memory/README.md) - An in-memory implementation of browser storage.
+2. working on more deep components and start cleaning mess, which I see already even after short code looking
 
-* ⚪ [**Storage-Sync**](components/browser/storage-sync/README.md) - A syncable implementation of browser storage backed by [application-services' Places lib](https://github.com/mozilla/application-services).
+3. adding Tor capabilities?
 
-* 🔴 [**Tabstray**](components/browser/tabstray/README.md) - A customizable tabs tray for browsers.
+4. removing all this political correctness from code and made it making what it should do
 
-* ⚪ [**Toolbar**](components/browser/toolbar/README.md) - A customizable toolbar for browsers.
+# This is crazyness - too much
 
-## Concept
+I have heard it many times.
 
-_API contracts and abstraction layers for browser components._
+In 1999 first I made fork of big project Gnokii, then started creating with big success something from scratch (1999-2007, other people are updating it till now).
 
-* ⚪ [**Awesomebar**](components/concept/awesomebar/README.md) - An abstract definition of an awesome bar component.
+Around 2011 I have started playing with Android and created big "Przepisy Drogowe" family, which is used for now.
 
-* ⚪ [**Engine**](components/concept/engine/README.md) - Abstraction layer that allows hiding the actual browser engine implementation.
+In my "main" work I have also done a lot of coding.
 
-* ⚪ [**Fetch**](components/concept/fetch/README.md) - An abstract definition of an HTTP client for fetching resources.
+Browser is of course much bigger, but I'm also much older + I need some fun for longer. Maybe my work will need year or years, but I will do definitely everything not to make it worse than Mozilla's code.
 
-* 🔴 [**Push**](components/concept/push/README.md) - An abstract definition of a push service component.
+# This is not Google and this is so sloooowwwww
 
-* ⚪ [**Storage**](components/concept/storage/README.md) - Abstract definition of a browser storage component.
+Also all "Chrome" like projects are already on the market and there are people working on them. Mozilla foundation is making very strange polital moves, but her code is so clean and good, that can provide some codebase for something. World needs some alternative, let's see, where this will be in half year and year.
 
-* 🔴 [**Tabstray**](components/concept/tabstray/README.md) - Abstract definition of a tabs tray component.
+Mozilla was making strange technical moves in last two or three years, let's code and show them what can be done.
 
-* ⚪ [**Toolbar**](components/concept/toolbar/README.md) - Abstract definition of a browser toolbar component.
+# You're stupid man
 
-## Feature
+Maybe, but (will) also get a lot of professional experience with this (and fun)
 
-_Combined components to implement feature-specific use cases._
+# You're laying. Mozilla/Google are great
 
-* 🔴 [**Accounts**](components/feature/accounts/README.md) - A component that connects an FxaAccountManager from [service-firefox-accounts](components/service/firefox-accounts/README.md) with [feature-tabs](components/feature/tabs/README.md) in order to facilitate authentication flows.
+Yes, they're. They changed world and **if in some place I said something incorrect about working there people, please take apologies** (I just wanted to show some aspects of their actions and there was nothing personal in this).
 
-* 🔴 [**Accounts Push**](components/feature/accounts-push/README.md) - Feature of use cases for FxA Account that work with push support.
+The problem is, that every revolution eats own children and with both companies I see only one sentence, which is "earning money".
 
-* ⚪ [**Awesomebar**](components/feature/awesomebar/README.md) - A component that connects a [concept-awesomebar](components/concept/awesomebar/README.md) implementation to a [concept-toolbar](components/concept/toolbar/README.md) implementation and provides implementations of various suggestion providers.
+Steven King said in January 2020 "...I would never consider diversity in matters of art. Only quality. It seems to me that to do otherwise would be wrong."
 
-* ⚪ [**Context Menu**](components/feature/contextmenu/README.md) - A component for displaying context menus when *long-pressing* web content.
+I will say - I will never consider other things than quality.
 
-* 🔴 [**Custom Tabs**](components/feature/customtabs/README.md) - A component for providing [Custom Tabs](https://developer.chrome.com/multidevice/android/customtabs) functionality in browsers.
+Maybe my research project will be only research project, but maybe also inspire others for good changes. Good makes good.
 
-* ⚪ [**Downloads**](components/feature/downloads/README.md) - A component to perform downloads using the [Android downloads manager](https://developer.android.com/reference/android/app/DownloadManager).
+# I want to do something here
 
-* 🔴 [**Intent**](components/feature/intent/README.md) - A component that provides intent processing functionality by combining various other feature modules.
+I don't care if you're politically correct or not, what you're doing in your private life as long as you can contribute and won't do something prohibited by GitHub, law and human conscience (no adverts for drags, no threats, etc.)
 
-* 🔴 [**Progressive Web Apps (PWA)**](components/feature/pwa/README.md) - A component that provides functionality for supporting Progressive Web Apps (PWA).
+I will not pay for this work, I will not also say anything about making safe Internet, saving world from Google or other bullshit.
 
-* 🔴 [**Reader View**](components/feature/readerview/README.md) - A component that provides Reader View functionality.
+Let's do technical work together without unnecessary words - if it gives profits, it will be accepted.
 
-* ⚪ [**QR**](components/feature/qr/README.md) - A component that provides functionality for scanning QR codes.
+# How to start
 
-* 🔴 [**Search**](components/feature/search/README.md) - A component that connects an (concept) engine implementation with the browser search module.
+1. Download true-android-components (into true-android-components folder) and true-fenix (into true-fenix folder)
 
-* ⚪ [**Session**](components/feature/session/README.md) - A component that connects an (concept) engine implementation with the browser session and storage modules.
+2. In the true-fenix\local.properties add line ``autoPublish.android-components.dir=../true-android-components``
 
-* 🔴 [**Sync**](components/feature/sync/README.md) -A component that provides synchronization orchestration for groups of (concept) SyncableStore objects.
-
-* 🔴 [**Tabs**](components/feature/tabs/README.md) - A component that connects a tabs tray implementation with the session and toolbar modules.
-
-* 🔴 [**Tab Collections**](components/feature/tab-collections/README.md) - Feature implementation for saving, restoring and organizing collections of tabs.
-
-* 🔴 [**Toolbar**](components/feature/toolbar/README.md) - A component that connects a (concept) toolbar implementation with the browser session module.
-
-* 🔴 [**Top Sites**](components/feature/top-sites/README.md) - Feature implementation for saving and removing top sites.
-
-* ⚪ [**Prompts**](components/feature/prompts/README.md) - A component that will handle all the common prompt dialogs from web content.
-
-* ⚪ [**Push**](components/feature/push/README.md) - A component that provides Autopush messages with help from a supported push service.
-
-* ⚪ [**Find In Page**](components/feature/findinpage/README.md) - A component that provides an UI widget for [find in page functionality](https://support.mozilla.org/en-US/kb/search-contents-current-page-text-or-links).
-
-* 🔴 [**Remote Tabs**](components/feature/remotetabs/README.md) - Feature that provides access to other device's tabs in the same account.
-
-* 🔴 [**Site Permissions**](components/feature/sitepermissions/README.md) - A feature for showing site permission request prompts.
-
-* 🔴 [**Web Notifications**](components/feature/webnotifications/README.md) - A component for displaying web notifications.
-
-* 🔵 [**WebCompat**](components/feature/webcompat/README.md) - A feature to enable website-hotfixing via the Web Compatibility System-Addon.
-
-* 🔴 [**Web Add-ons**](components/feature/addons/README.md) - A feature that provides functionality for managing add-ons.
-
-## UI
-
-_Generic low-level UI components for building apps._
-
-* 🔵 [**Autocomplete**](components/ui/autocomplete/README.md) - A set of components to provide autocomplete functionality.
-
-* 🔵 [**Colors**](components/ui/colors/README.md) - The standard set of [Photon](https://design.firefox.com/photon/) colors.
-
-* 🔵 [**Fonts**](components/ui/fonts/README.md) - The standard set of fonts used by Mozilla Android products.
-
-* 🔵 [**Icons**](components/ui/icons/README.md) - A collection of often used browser icons.
-
-* ⚪ [**Tabcounter**](components/ui/tabcounter/README.md) - A button that shows the current tab count and can animate state changes.
-
-## Service
-
-_Components and libraries to interact with backend services._
-
-* 🔵 [**Firefox Accounts (FxA)**](components/service/firefox-accounts/README.md) - A library for integrating with Firefox Accounts.
-
-* 🔵 [**Firefox Sync - Logins**](components/service/sync-logins/README.md) - A library for integrating with Firefox Sync - Logins.
-
-* 🔵 [**Fretboard**](components/service/fretboard/README.md) - An Android framework for segmenting users in order to run A/B tests and roll out features gradually.
-
-* 🔴 [**Glean**](components/service/glean/README.md) - A client-side telemetry SDK for collecting metrics and sending them to Mozilla's telemetry service (eventually replacing [service-telemetry](components/service/telemetry/README.md)).
-
-* 🔴 [**Experiments**](components/service/experiments/README.md) - An Android SDK for running experiments on user segments in multiple branches.
-
-* ⚪ [**Location**](components/service/location/README.md) - A library for accessing Mozilla's and other location services.
-
-* 🔴 [**Pocket**](components/service/pocket/README.md) - A library for communicating with the Pocket API.
-
-* 🔵 [**Telemetry**](components/service/telemetry/README.md) - A generic library for sending telemetry pings from Android applications to Mozilla's telemetry service.
-
-## Support
-
-_Supporting components with generic helper code._
-
-* 🔵 [**Android Test**](components/support/android-test/README.md) - A collection of helpers for testing components in instrumented (on device) tests (`src/androidTest`).
-
-* 🔵 [**Base**](components/support/base/README.md) - Base component containing building blocks for components.
-
-* 🔵 [**Ktx**](components/support/ktx/README.md) - A set of Kotlin extensions on top of the Android framework and Kotlin standard library.
-
-* ⚪ [**Migration**](components/support/migration/README.md) - Helper code to migrate from a Fennec-based (Firefox for Android) app to an Android Components based app.
-
-* 🔵 [**Test**](components/support/test/README.md) - A collection of helpers for testing components in local unit tests (`src/test`).
-
-* 🔵 [**Test Appservices**](components/support/test-appservices/README.md) - A component for synchronizing Application Services' unit testing dependencies used in Android Components.
-
-* 🔵 [**Test LibState**](components/support/test-libstate/README.md) - A collection of helpers for testing functionality that relies on the lib-state component in local unit tests (`src/test`).
-
-* 🔵 [**Utils**](components/support/utils/README.md) - Generic utility classes to be shared between projects.
-
-* 🔵 [**Webextensions**](components/support/webextensions/README.md) - A component containing building blocks for features implemented as web extensions.
-
-## Standalone libraries
-
-* ⚪ [**Crash**](components/lib/crash/README.md) - A generic crash reporter component that can report crashes to multiple services.
-
-* 🔵 [**Dataprotect**](components/lib/dataprotect/README.md) - A component using AndroidKeyStore to protect user data.
-
-* ⚪ [**Fetch-HttpURLConnection**](components/lib/fetch-httpurlconnection/README.md) - A [concept-fetch](concept/fetch/README.md) implementation using [HttpURLConnection](https://developer.android.com/reference/java/net/HttpURLConnection.html).
-
-* ⚪ [**Fetch-OkHttp**](components/lib/fetch-okhttp/README.md) - A [concept-fetch](concept/fetch/README.md) implementation using [OkHttp](https://github.com/square/okhttp).
-
-* ⚪ [**JEXL**](components/lib/jexl/README.md) - Javascript Expression Language: Context-based expression parser and evaluator.
-
-* 🔴  [**Nearby**](components/lib/nearby/README.md) - A library simplifying access to the [Google Connections API](https://developers.google.com/nearby/connections/overview) for peer-to-peer networking.
-
-* ⚪ [**Public Suffix List**](components/lib/publicsuffixlist/README.md) - A library for reading and using the [public suffix list](https://publicsuffix.org/).
-
-* 🔴[**Push-Firebase**](components/lib/push-firebase/README.md) - A [concept-push](concept/push/README.md) implementation using [Firebase Cloud Messaging](https://firebase.google.com/products/cloud-messaging/).
-
-* ⚪ [**State**](components/lib/state/README.md) - A library for maintaining application state.
-
-## Tooling
-
-* 🔵 [**Fetch-Tests**](components/tooling/fetch-tests/README.md) - A generic test suite for components that implement [concept-fetch](concept/fetch/README.md).
-
-* 🔵 [**Lint**](components/tooling/lint/README.md) - Custom Lint rules for the components repository.
-
-# Sample apps
-
-_Sample apps using various components._
-
-* [**Browser**](samples/browser) - A simple browser composed from browser components. This sample application is only a very basic browser. For a full-featured reference browser implementation see the **[reference-browser repository](https://github.com/mozilla-mobile/reference-browser)**.
-
-* [**Crash**](samples/crash) - An app showing the integration of the `lib-crash` component.
-
-* [**Firefox Accounts (FxA)**](samples/firefox-accounts) - A simple app demoing Firefox Accounts integration.
-
-* [**Firefox Sync**](samples/sync) - A simple app demoing general Firefox Sync integration, with bookmarks and history.
-
-* [**Firefox Sync - Logins**](samples/sync-logins) - A simple app demoing Firefox Sync (Logins) integration.
-
-* [**DataProtect**](samples/dataprotect) - An app demoing how to use the [**Dataprotect**](components/lib/dataprotect/README.md) component to load and store encrypted data in `SharedPreferences`.
-
-* [**Glean**](samples/glean) - An app demoing how to use the [**Glean**](components/service/glean/README.md) library to collect and send telemetry data.
-
-* [**Nearby Chat**](samples/nearby-chat) - An app demoing how to use the [**Nearby**](components/lib/nearby/README.md) library for peer-to-peer communication between devices.
-
-* [**Toolbar**](samples/toolbar) - An app demoing multiple customized toolbars using the [**browser-toolbar**](components/browser/toolbar/README.md) component.
-
-# Building #
-
-## Command line ##
-
-```
-$ git clone https://github.com/mozilla-mobile/android-components.git
-$ cd android-components
-$ ./gradlew assemble
-```
-
-## Android Studio ##
-
-If the environment variable `JAVA_HOME` is not defined, you will need to set it. If you would like to use the JDK installed by Android Studio, here's how to find it:
-
-1. Open Android Studio.
-2. Select "Configure".
-3. Select "Default Project Structure". You should now see the Android JDK location.
-4. Set the environment variable `JAVA_HOME` to the location. (How you set an environment variable depends on your OS.)
-5. Restart Android Studio.
-
-Once the environment variable is set, you can import the project into Android Studio with the default wizard options.
-
-If your build fails, you may find you get more instructive error messages by attempting the build at the command line.
-
-# Coding Standards #
-
-## Style ##
-We follow the style enforced by [ktlint](https://ktlint.github.io/) and [detekt](https://arturbosch.github.io/detekt/). See [how to configure Android Studio appropriately](https://github.com/pinterest/ktlint#option-1-recommended).
-
-To check your style, run:
-
-```
-./gradlew ktlint
-./gradlew detekt
-```
-
-## Documentation ##
-We use `README.md` files and [Dokka](https://github.com/Kotlin/dokka), which you can generate with:
-
-```
-./gradlew dokka                          # Generate dokka for the entire repo
-./gradlew :browser-icons:dokka           # Generate dokka for a specified module
-```
-
-If you fix a bug or change an API, you should update [docs/changelog.md](https://github.com/mozilla-mobile/android-components/blob/master/docs/changelog.md).
-
-## Testing ##
-You are expected to both add tests for code that you write and make sure that your changes do not
-cause existing tests to fail. You may find these command lines helpful:
-
-```
-./gradlew test                            # Run all tests
-./gradlew :support-ktx:testdebugunittest  # Run unit tests for a specified module
-```
-
-See also [how to measure code coverage](https://mozac.org/contributing/code-coverage).
-
-## Accessibility ##
-If your code has user-facing changes, follow [Android accessibility best practices](https://github.com/mozilla-mobile/shared-docs/blob/master/android/accessibility_guide.md).
-
-# License
-
-    This Source Code Form is subject to the terms of the Mozilla Public
-    License, v. 2.0. If a copy of the MPL was not distributed with this
-    file, You can obtain one at http://mozilla.org/MPL/2.0/
+3. Import project inside Android Studio from true-fenix folder
